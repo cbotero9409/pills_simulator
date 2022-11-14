@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Simulador</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link href="assets/css/style.css" rel="stylesheet" type="text/css"/>
+        <link href="assets/css/navBar.css" rel="stylesheet" type="text/css"/>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css'>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.4/css/tether.min.css'>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+
+        <script src='https://code.jquery.com/jquery-3.3.1.slim.min.js'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.4/js/tether.min.js'></script>
+        <script src="assets/js/bootstrap.js" type="text/javascript"></script>
+        <script src="assets/js/navBar.js" type="text/javascript"></script>
+        <script src="assets/js/capsules.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <form method="post">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12" id='simulator_body'>
+                        <div class="wrapper">
+                            <!-- Sidebar  -->
+                            <nav id="sidebar">
+                                <div class="sidebar-header">
+                                    <h3>Simulador de Cápsulas</h3>
+                                </div>
+                                <ul class="list-unstyled components">                                    
+                                    <li id="nav_new" class="py-3">
+                                        <a href="#" onclick="newCapsule()"><i class="bi bi-palette-fill"></i>&nbsp; Nuevo Proyecto</a>
+                                    </li>
+                                    <li id="nav_caps" class="active py-3">
+                                        <a href="#" onclick="navBar(1)"><i class="bi bi-bandaid"></i>&nbsp; <span id="nav_cap_text">Cápsulas</span></a>
+                                    </li>
+                                    <li id="nav_sizes" class="py-3">
+                                        <a href="#" class="disabled" id="link_size" onclick="navBar(2)"><i class="bi bi-arrows-angle-expand"></i>&nbsp; <span id="nav_sizes_text">Tamaños</span></a>
+                                    </li>
+                                    <li id="nav_appearance" class="py-3">
+                                        <a href="#" class="disabled" id="link_app" onclick="navBar(3)"><i class="bi bi-sliders"></i>&nbsp; <span id="nav_app_text">Apariencia</span></a>
+                                    </li>
+                                    <li id="nav_colors" class="py-3">
+                                        <a href="#" class="disabled" id="link_colors" onclick="navBar(4)"><i class="bi bi-brush-fill"></i>&nbsp; Tus Colores</a>
+                                    </li>
+                                    <li id="nav_custom" class="py-3">
+                                        <a href="#" class="disabled" id="link_custom" onclick="navBar(5)"><i class="bi bi-gear-fill"></i>&nbsp; Personalizar</a>
+                                    </li>
+                                    <li id="nav_result" class="py-3">
+                                        <a href="#" class="disabled" id="link_result" onclick="navBar(6)"><i class="bi bi-file-check-fill"></i>&nbsp; Tu Cápsula</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                            <!-- Page Content  -->
+                            <div id="content" class="mt-5">
+<!--                                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                                    <div class="container-fluid">
+                                        <button type="button" id="sidebarCollapse" class="btn btn-info">
+                                            <i class="bi bi-list"></i>
+                                        </button>
+                                    </div>
+                                </nav>-->
+                                <div id="caps_type">
+                                    <div class="row">
+                                        <div class="col-12 d-flex justify-content-center h4">
+                                            Seleccionar Tipo de Cápsula
+                                        </div>
+                                    </div>
+                                    <div class="row mt-5">
+                                        <div class="col-12 border text-center bg-secondary text-white py-2">
+                                            Gelatina
+                                        </div>
+                                    </div>
+                                    <div class="row my-2">
+                                        <div class="col-4">
+                                            <button class="btn btn-light" id="type1" onclick="selectType(1)" type="button"><img src="assets/img/capsule.png" alt="capsule" class="img-fluid"><span id="type_text_1">Coni-Snap </span><i class="bi bi-info-square-fill info_icon" onclick="showInfo(1)"></i></button>
+                                        </div>
+                                        <div class="col-4">
+                                            <button class="btn btn-light" id="type2" onclick="selectType(2)" type="button"><img src="assets/img/capsule.png" alt="capsule" class="img-fluid"><span id="type_text_2">Coni-Snap Sprinkle </span><i class="bi bi-info-square-fill info_icon"></i></button>
+                                        </div>
+                                        <div class="col-4">
+                                            <button class="btn btn-light" type="button"><img src="assets/img/capsule.png" alt="capsule" class="img-fluid"><span>OceanCaps </span><i class="bi bi-info-square-fill info_icon"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 border text-center bg-secondary text-white py-2">
+                                            Hipromelosa - HPMC
+                                        </div>
+                                    </div>
+                                    <div class="row my-2">
+                                        <div class="col-4">
+                                            <button class="btn btn-light" type="button"><img src="assets/img/capsule.png" alt="capsule" class="img-fluid"><span>Vcaps </span><i class="bi bi-info-square-fill info_icon"></i></button>
+                                        </div>
+                                        <div class="col-4">
+                                            <button class="btn btn-light" type="button"><img src="assets/img/capsule.png" alt="capsule" class="img-fluid"><span>Vcaps Plus </span><i class="bi bi-info-square-fill info_icon"></i></button>
+                                        </div>
+                                        <div class="col-4">
+                                            <button class="btn btn-light" type="button"><img src="assets/img/capsule.png" alt="capsule" class="img-fluid"><span>DRcaps </span><i class="bi bi-info-square-fill info_icon"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 border text-center bg-secondary text-white py-2">
+                                            Vegetariana - Pullulan
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-4 offset-4">
+                                            <button class="btn btn-light" type="button"><img src="assets/img/capsule.png" alt="capsule" class="img-fluid"><span>PlantCaps </span><i class="bi bi-info-square-fill info_icon"></i></button>
+                                        </div>                                    
+                                    </div>
+                                    <input type="hidden" id="capsule_type" name="capsule_type">
+                                    <div class="row float-right mt-4 d-none" id="btn_type">
+                                        <button type="button" class="btn btn-primary" onclick="continueSize()">Continuar <i class="bi bi-arrow-right-circle-fill"></i></button>
+                                    </div>
+                                </div>
+                                <div id="caps_info_1" class="d-none mt-5" onclick="closeInfo()">
+                                    <div class="row">
+                                        <div class="col-12 d-flex justify-content-center h5 title_caps">
+                                            <span>Cápsulas PlantCaps</span>
+                                            <a href="#" class="ml-5 float-right"><i class="bi bi-x-square"></i></a>
+                                        </div>
+                                        <div class="text-center">
+                                            Plantcaps capsules, a vegetarian capsule made from pullulan – naturally fermented from tapioca – for a more extensive and distinctive appeal to the booming and discerning healthy lifestyle market worldwide.
+                                        </div>
+                                    </div>
+                                    <div class="row d-flex justify-content-center">
+                                        <img src="assets/img/plantcaps.jpg" alt="capsule" class="img-fluid">
+                                    </div>
+                                    <div>
+                                        <span>Everything Today’s Consumers Want in a Capsule. Nothing They Don’t.</span>
+                                        <ul class="h6 text-muted">
+                                            <li>All the benefits of gelatin in a vegetarian capsule</li>
+                                            <li>Organic label language allowed in the U.S. when filled with organic ingredients</li>
+                                            <li>The more natural alternative, starch-free, gluten-free, preservative-free, vegetable origin and non-GMO; Gras status</li>
+                                            <li>Certified Vegan, Non-GMO, Vegetarian Society, Halal and Kosher certifications</li>
+                                            <li>New patent-pending formulation provides robust performance with a wide range of ingredients</li>
+                                            <li>Excellent oxygen barrier properties</li>
+                                            <li>Suitable for Asian regulatory environments</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div id="caps_sizes" class="d-none">
+                                    <div class="row">
+                                        <div class="col-12 d-flex justify-content-center h4">
+                                            Seleccionar Tamaño de Cápsula
+                                        </div>
+                                    </div>
+                                    <div id='size_selection'>
+                                        <div class="row mt-5">
+                                            <div class="col-2">
+                                                <button class="btn btn-light btn_size" type="button" onclick="selectSize(1)"><img src="assets/img/capsule_1.png" alt="capsule" class="img-fluid" id="img_size_1"><span>000el</span></button>
+                                            </div>
+                                            <div class="col-2">
+                                                <button class="btn btn-light btn_size" type="button" onclick="selectSize(2)"><img src="assets/img/capsule_1.png" alt="capsule" class="img-fluid"><span>000</span></button>
+                                            </div>
+                                            <div class="col-2">
+                                                <button class="btn btn-light btn_size" type="button"><img src="assets/img/capsule_1.png" alt="capsule" class="img-fluid"><span>0el</span></button>
+                                            </div>
+                                            <div class="col-2">
+                                                <button class="btn btn-light btn_size" type="button"><img src="assets/img/capsule_1.png" alt="capsule" class="img-fluid"><span>0</span></button>
+                                            </div>
+                                            <div class="col-2">
+                                                <button class="btn btn-light btn_size" type="button"><img src="assets/img/capsule_1.png" alt="capsule" class="img-fluid"><span>1el</span></button>
+                                            </div>
+                                            <div class="col-2">
+                                                <button class="btn btn-light btn_size" type="button"><img src="assets/img/capsule_1.png" alt="capsule" class="img-fluid"><span>1</span></button>
+                                            </div>
+                                        </div>                                        
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <button class="btn btn-light btn_size" type="button"><img src="assets/img/capsule_1.png" alt="capsule" class="img-fluid"><span>000el</span></button>
+                                            </div>
+                                            <div class="col-2">
+                                                <button class="btn btn-light btn_size" type="button"><img src="assets/img/capsule_1.png" alt="capsule" class="img-fluid"><span>000</span></button>
+                                            </div>
+                                            <div class="col-2">
+                                                <button class="btn btn-light btn_size" type="button"><img src="assets/img/capsule_1.png" alt="capsule" class="img-fluid"><span>0el</span></button>
+                                            </div>
+                                            <div class="col-2">
+                                                <button class="btn btn-light btn_size" type="button"><img src="assets/img/capsule_1.png" alt="capsule" class="img-fluid"><span>0</span></button>
+                                            </div>
+                                            <div class="col-2">
+                                                <button class="btn btn-light btn_size" type="button"><img src="assets/img/capsule_1.png" alt="capsule" class="img-fluid"><span>1el</span></button>
+                                            </div>
+                                            <div class="col-2">
+                                                <button class="btn btn-light btn_size" type="button"><img src="assets/img/capsule_1.png" alt="capsule" class="img-fluid"><span>1</span></button>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-12">
+                                                <span class="h6 font-weight-bold">Capacities</span>
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Size</th>
+                                                            <th scope="col" class="size1">000el</th>
+                                                            <th scope="col">000</th>
+                                                            <th scope="col">0el</th>
+                                                            <th scope="col">0</th>
+                                                            <th scope="col">1el</th>
+                                                            <th scope="col">1</th>
+                                                            <th scope="col">000el</th>
+                                                            <th scope="col">000</th>
+                                                            <th scope="col">0el</th>
+                                                            <th scope="col">0</th>
+                                                            <th scope="col">1el</th>
+                                                            <th scope="col">1</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th scope="row">Capsule Volume (ml)</th>
+                                                            <td class="size1">1.37</td>
+                                                            <td>1.02</td>
+                                                            <td>0.91</td>
+                                                            <td>1.37</td>
+                                                            <td>1.02</td>
+                                                            <td>0.91</td>
+                                                            <td>1.37</td>
+                                                            <td>1.02</td>
+                                                            <td>0.91</td>
+                                                            <td>1.37</td>
+                                                            <td>1.02</td>
+                                                            <td>0.91</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row" colspan="13">Powder Density / Capsule Capacity (mg)</th>                                                        
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">0.6 g/ml</th>
+                                                            <td class="size1">1.37</td>
+                                                            <td>1.02</td>
+                                                            <td>0.91</td>
+                                                            <td>1.37</td>
+                                                            <td>1.02</td>
+                                                            <td>0.91</td>
+                                                            <td>1.37</td>
+                                                            <td>1.02</td>
+                                                            <td>0.91</td>
+                                                            <td>1.37</td>
+                                                            <td>1.02</td>
+                                                            <td>0.91</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">0.8 g/ml</th>
+                                                            <td class="size1">1.37</td>
+                                                            <td>1.02</td>
+                                                            <td>0.91</td>
+                                                            <td>1.37</td>
+                                                            <td>1.02</td>
+                                                            <td>0.91</td>
+                                                            <td>1.37</td>
+                                                            <td>1.02</td>
+                                                            <td>0.91</td>
+                                                            <td>1.37</td>
+                                                            <td>1.02</td>
+                                                            <td>0.91</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">1 g/ml</th>
+                                                            <td class="size1">1.37</td>
+                                                            <td>1.02</td>
+                                                            <td>0.91</td>
+                                                            <td>1.37</td>
+                                                            <td>1.02</td>
+                                                            <td>0.91</td>
+                                                            <td>1.37</td>
+                                                            <td>1.02</td>
+                                                            <td>0.91</td>
+                                                            <td>1.37</td>
+                                                            <td>1.02</td>
+                                                            <td>0.91</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">1.2 g/ml</th>
+                                                            <td class="size1">1.37</td>
+                                                            <td>1.02</td>
+                                                            <td>0.91</td>
+                                                            <td>1.37</td>
+                                                            <td>1.02</td>
+                                                            <td>0.91</td>
+                                                            <td>1.37</td>
+                                                            <td>1.02</td>
+                                                            <td>0.91</td>
+                                                            <td>1.37</td>
+                                                            <td>1.02</td>
+                                                            <td>0.91</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" id="capsule_size" name="capsule_size">
+                                        <div class="row float-right mt-4 d-none" id="btn_size">
+                                            <button type="button" class="btn btn-primary" onclick="continueApp()">Continuar <i class="bi bi-arrow-right-circle-fill"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="caps_app" class="d-none">
+                                    <div class="row">
+                                        <div class="col-12 d-flex justify-content-center h4">
+                                            Seleccionar Apariencia de la Cápsula
+                                        </div>
+                                    </div>
+                                    <div class="row mt-5">
+                                        <div class="col-12 border text-center bg-secondary text-white py-2">
+                                            Número de Colores
+                                        </div>
+                                    </div>
+                                    <div class="row my-2">
+                                        <div class="col-6 d-flex justify-content-center">
+                                            <button class="btn btn-light color_button" type="button" onclick="appOptions(1)" id="btn_1color"><img src="assets/img/capsule_3.png" alt="capsule" class="img-fluid" width="150"><br><span class='h5 text-white'>1 COLOR</span></button>
+                                        </div>
+                                        <div class="col-6 d-flex justify-content-center">
+                                            <button class="btn btn-light color_button" type="button" onclick="appOptions(2)" id="btn_2colors"><img src="assets/img/capsule_4.png" alt="capsule" class="img-fluid" width="150"><br><span class='h5 text-white'>2 COLORES</span></button>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="capsule_colors" name="capsule_colors">
+                                    <div id="one_color" class="d-none">
+                                        <div class="row">
+                                            <div class="col-12 border text-center bg-secondary text-white py-2">
+                                                Opacidad
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col-4 d-flex justify-content-center offset-4">
+                                                <button class="btn btn-light color_button py-3" type="button" onclick="selectOneOpacity(1)" id="one_opac_1"><img src="assets/img/capsule_3.png" alt="capsule" class="img-fluid" width="150"><span class='h5 text-white'>&nbsp; Opaco</span></button>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4 d-flex justify-content-center offset-4">
+                                                <button class="btn btn-light color_button py-3" type="button" onclick="selectOneOpacity(2)" id="one_opac_2"><img src="assets/img/capsule_3.png" alt="capsule" class="img-fluid transp_cap" width="150"><span class='h5 text-white'>&nbsp; Transparente</span></button>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4 d-flex justify-content-center offset-4">
+                                                <button class="btn btn-light color_button py-3" type="button" onclick="selectOneOpacity(3)" id="one_opac_3"><img src="assets/img/capsule_6.png" alt="capsule" class="img-fluid transp_cap_2" width="150"><span class='h5 text-white'>&nbsp; Iridiscencia</span></button>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" id="capsule_one_opacity" name="capsule_one_opacity">
+                                    </div>
+                                    <div id="two_colors" class="d-none">
+                                        <div class="row">
+                                            <div class="col-12 border text-center bg-secondary text-white py-2">
+                                                Opacidad
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="row">
+                                                    <div class="col-12 text-center bg-secondary text-white py-2">
+                                                        Cuerpo de la Cápsula
+                                                    </div>                                                
+                                                </div>
+                                                <div class="row mt-3">
+                                                    <div class="offset-4 img_opacity">
+                                                        <button class="btn btn-light color_button" type="button" onclick="selectTwoOpacity(1)" id="two_opac_body_1"><span class='h5 text-white float-left mt-3'>Opaco &nbsp;</span><img src="assets/img/capsule_8.png" alt="capsule" class="img-fluid float-right"></button>
+                                                        <button class="btn btn-light color_button" type="button" onclick="selectTwoOpacity(2)" id="two_opac_body_2"><span class='h5 text-white float-left mt-3'>Transparente &nbsp;</span><img src="assets/img/capsule_8.png" alt="capsule" class="img-fluid transp_cap float-right"></button>
+                                                        <button class="btn btn-light color_button" type="button" onclick="selectTwoOpacity(3)" id="two_opac_body_3"><span class='h5 text-white float-left mt-3'>Iridiscencia &nbsp;</span><img src="assets/img/capsule_7.png" alt="capsule" class="img-fluid transp_cap_2 float-right"></button>
+                                                    </div>
+                                                </div>                                            
+                                            </div>
+                                            <input type="hidden" id="capsule_opacity_body" name="capsule_opacity_body">
+                                            <div class="col-6 ">
+                                                <div class="row">
+                                                    <div class="col-12 text-center bg-secondary text-white py-2">
+                                                        Tapa de la Cápsula
+                                                    </div>
+                                                    <div class="row mt-3">
+                                                        <div class="offset-1 img_opacity">
+                                                            <button class="btn btn-light color_button" type="button" onclick="selectTwoOpacity(4)" id="two_opac_cap_1"><img src="assets/img/capsule_10.png" alt="capsule" class="img-fluid float-left"><span class='h5 text-white float-right mt-3'>&nbsp; Opaco</span></button>
+                                                            <button class="btn btn-light color_button" type="button" onclick="selectTwoOpacity(5)" id="two_opac_cap_2"><img src="assets/img/capsule_10.png" alt="capsule" class="img-fluid transp_cap float-left"><span class='h5 text-white float-right mt-3'>&nbsp; Transparente</span></button>
+                                                            <button class="btn btn-light color_button" type="button" onclick="selectTwoOpacity(6)" id="two_opac_cap_3"><img src="assets/img/capsule_9.png" alt="capsule" class="img-fluid transp_cap_2 float-left"><span class='h5 text-white float-right mt-3'>&nbsp; Iridiscencia</span></button>
+                                                        </div>
+                                                    </div>    
+                                                </div>  
+                                            </div>
+                                            <input type="hidden" id="capsule_opacity_cap" name="capsule_opacity_cap">
+                                        </div>
+                                    </div>                                        
+                                    <div class="row float-right d-none mt-4" id="btn_app">
+                                        <button type="button" class="btn btn-primary" onclick="continueColors()">Continuar <i class="bi bi-arrow-right-circle-fill"></i></button>
+                                    </div>
+                                </div>
+                                <div id="caps_colors" class="d-none">
+                                    <div class="row py-2">
+                                        <div class="col-12 d-flex justify-content-center h4">
+                                            Selección de Colores
+                                        </div>
+                                    </div>
+                                    <div class="d-none mt-5" id="one_color_div">
+                                        <div class="row">
+                                            <div class="col-12 border text-center bg-secondary text-white py-2">
+                                                Cuerpo y Tapa de la Cápsula
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-12">
+                                                <label for="capsule_one_color">Seleccionar color: </label>
+                                                <input type="color" class="mt-3 ml-3" id="capsule_one_color" name="capsule_one_color" onchange="selectOneColor()">
+                                            </div>
+                                        </div> 
+                                        <div class="row">
+                                            <div class="col-12 d-flex justify-content-center">
+                                                <img src="assets/img/capsule3d.png" alt="capsule" class="img-fluid temp_img">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-none mt-5" id="two_colors_div">
+                                        <div class="row">
+                                            <div class="col-6 border text-center bg-secondary text-white py-2">
+                                                Cuerpo de la Cápsula
+                                            </div>
+                                            <div class="col-6 border text-center bg-secondary text-white py-2">
+                                                Tapa de la Cápsula
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-6">
+                                                <label for="capsule_body_color">Seleccionar color: </label>
+                                                <input type="color" class="mt-3 ml-3" id="capsule_body_color" name="capsule_body_color" onchange="selectTwoColors(1)">
+                                            </div>
+                                            <div class="col-6">
+                                                <label for="capsule_cap_color">Seleccionar color: </label>
+                                                <input type="color" class="mt-3 ml-3" id="capsule_cap_color" name="capsule_cap_color" onchange="selectTwoColors(2)">
+                                            </div>
+                                        </div> 
+                                        <div class="row">
+                                            <div class="col-12 d-flex justify-content-center">
+                                                <img src="assets/img/capsule3d.png" alt="capsule" class="img-fluid temp_img">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row float-right mt-4 d-none" id="btn_colors">
+                                        <button type="button" class="btn btn-primary" onclick="continueCustom()">Continuar <i class="bi bi-arrow-right-circle-fill"></i></button>
+                                    </div>
+                                </div>
+                                <div id="caps_custom" class="d-none">
+                                    <div class="row py-2">
+                                        <div class="col-12 d-flex justify-content-center h4">
+                                            Personaliza tu Cápsula
+                                        </div>
+                                    </div>
+                                    <div class="row mt-5">
+                                        <div class="col-6 border text-center bg-secondary text-white py-2">
+                                            Cuerpo de la Cápsula
+                                        </div>
+                                        <div class="col-6 border text-center bg-secondary text-white py-2">
+                                            Tapa de la Cápsula
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-4">
+                                            <div class="row">
+                                                <div class='col-12'>
+                                                    Escojer Tipo de Impresión
+                                                </div>
+                                            </div>
+                                            <div class="row my-2">
+                                                <div class='col-12'>
+                                                    <button type="button" class="btn btn-primary btn-sm print_btn" onclick="customBodyText()">Texto</button>                                                
+                                                    <button type="button" class="btn btn-primary btn-sm print_btn" onclick="customBodyImg()">Imagen</button>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" id="capsule_body_print_type" name="capsule_body_print_type">
+                                            <div class="row d-none mt-4" id="custom_body_text">
+                                                <div class='col-12'>
+                                                    <div class="form-group">
+                                                        <label for="capsule_body_text_input" class="label_custom">Tu Texto (máx. 8 caracteres)</label>
+                                                        <input type="text" class="form-control form-control-sm" id="capsule_body_text_input" name="capsule_body_text_input" placeholder="Tu Texto Aquí" maxlength="8">
+                                                        <input type="color" value="#000000" id="capsule_body_text_color" name="capsule_body_text_color" class="mt-1">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row d-none mt-4" id="custom_body_img">
+                                                <div class='col-12'>
+                                                    <label for="capsule_body_img_input" class="label_custom">Tu Imágen (PNG fondo transparente)</label>
+                                                    <div class="custom-file mb-1">                                                        
+                                                        <input type="file" class="custom-file-input" id="capsule_body_img_input" lang="es" accept="image/png" name="capsule_body_img_input" onchange="uploadBody(this.value)">
+                                                        <label class="custom-file-label" for="capsule_body_img_input" id="capsule_body_img_text">Seleccionar</label>
+                                                    </div>
+                                                    <button type="button" class="btn btn-primary btn-sm print_btn" onclick="resetBodyImg()">Reset</button>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class='col-12'>
+                                                    <span class="label_custom">Orientación</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class='col-12'>
+                                                    <button type="button" class="btn btn-primary btn-sm print_btn" onclick="selectBodyOrientation('Axial')">Axial</button>                                                
+                                                    <button type="button" class="btn btn-primary btn-sm print_btn" onclick="selectBodyOrientation('Radial')">Radial</button>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" id="capsule_body_print_orientation" name="capsule_body_print_orientation">
+                                        </div>
+                                        <div class="col-4 d-flex justify-content-center">
+                                            <img src="assets/img/capsule3d.png" alt="capsule" class="img-fluid">
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="row">
+                                                <div class='col-12'>
+                                                    Escojer Tipo de Impresión
+                                                </div>
+                                            </div>
+                                            <div class="row my-2">
+                                                <div class='col-12'>
+                                                    <button type="button" class="btn btn-primary btn-sm print_btn mr-1" onclick="customCapText()">Texto</button>                                                
+                                                    <button type="button" class="btn btn-primary btn-sm print_btn" onclick="customCapImg()">Imagen</button>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" id="capsule_cap_print_type" name="capsule_cap_print_type">
+                                            <div class="row d-none mt-4" id="custom_cap_text">
+                                                <div class='col-12'>
+                                                    <div class="form-group">
+                                                        <label for="capsule_cap_text_input" class="label_custom">Tu Texto (máx. 8 caracteres)</label>
+                                                        <input type="text" class="form-control form-control-sm" id="capsule_cap_text_input" name="capsule_cap_text_input" placeholder="Tu Texto Aquí" maxlength="8">
+                                                        <input type="color" value="#000000" id="capsule_cap_text_color" name="capsule_cap_text_color" class="mt-1">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row d-none mt-4" id="custom_cap_img">
+                                                <div class='col-12'>
+                                                    <label for="capsule_cap_img_input" class="label_custom">Tu Imágen (PNG fondo transparente)</label>
+                                                    <div class="custom-file mb-1">                                                        
+                                                        <input type="file" class="custom-file-input" id="capsule_cap_img_input" lang="es" accept="image/png" name="capsule_cap_img_input" onchange="uploadCap(this.value)">
+                                                        <label class="custom-file-label" for="capsule_cap_img_input" id="capsule_cap_img_text">Seleccionar</label>
+                                                    </div>
+                                                    <button type="button" class="btn btn-primary btn-sm print_btn" onclick="resetCapImg()">Reset</button>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class='col-12'>
+                                                    <span class="label_custom">Orientación</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class='col-12'>
+                                                    <button type="button" class="btn btn-primary btn-sm print_btn" onclick="selectCapOrientation('Axial')">Axial</button>                                                
+                                                    <button type="button" class="btn btn-primary btn-sm print_btn" onclick="selectCapOrientation('Radial')">Radial</button>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" id="capsule_cap_print_orientation" name="capsule_cap_print_orientation">                                            
+                                        </div>                                        
+                                    </div>
+                                    <div class="row float-right mt-4">
+                                        <button type="button" class="btn btn-primary" onclick="continueResult()">Continuar <i class="bi bi-arrow-right-circle-fill"></i></button>
+                                    </div>
+                                </div>
+                                <div id="your_cap" class="d-none">
+                                    <div class="row">
+                                        <div class="col-12 d-flex justify-content-center h4">
+                                            Tu Cápsula
+                                        </div>
+                                    </div>
+                                    <div class="row mt-5">
+                                        <div class="col-12 d-flex justify-content-center">
+                                            <img src="assets/img/capsule3d.png" alt="capsule" class="img-fluid temp_img">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-4 border text-center bg-secondary text-white py-2">
+                                            Descripción de la Cápsula
+                                        </div>                                        
+                                        <div class="col-4 border text-center bg-secondary text-white py-2">
+                                            Cuerpo de la Cápsula
+                                        </div>
+                                        <div class="col-4 border text-center bg-secondary text-white py-2">
+                                            Tapa de la Cápsula
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <ul class="h6 text-muted" id="capsule_description"></ul>
+                                        </div>                                        
+                                        <div class="col-4">
+                                            <ul class="h6 text-muted" id="body_result"></ul>
+                                        </div>  
+                                        <div class="col-4">
+                                            <ul class="h6 text-muted" id="cap_result"></ul>
+                                        </div>  
+                                    </div>
+                                    <div class="row float-right mt-4">
+                                        <button type="button" class="btn btn-primary">Guardar <i class="bi bi-save-fill"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </body>
+</html>
